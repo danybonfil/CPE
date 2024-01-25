@@ -1,0 +1,219 @@
+---
+title: |
+  |
+  | 
+  | Presidential Success in Mexico and the US Economy:
+  | Remittances and Misattribution of Responsibility
+  |
+  | 
+subtitle: |
+  |  
+  |
+  | FGV EBAPE
+  |
+  | 
+  | Comparative Political Economy 
+  | (Daniela Campello)
+  |
+  |
+author: Daniel Bonfil
+bibliography: refs.bib
+csl: apa7th.csl
+date: "2024-01-05"
+output:
+  pdf_document:
+    latex_engine: lualatex
+    keep_tex: true
+    toc: true # Table of Contents
+    number_sections: true # Numbering sections
+    fig_caption: true # Enable figure captions
+    #fig.align: center
+header-includes:
+    - \usepackage{setspace} # Specify \doublespacing or \singlespacing below at will
+    - \usepackage{float}
+    - \floatplacement{figure}{H}
+editor_options:
+  markdown:
+    wrap: 72
+# html_document:
+#   toc: true
+#   number_sections: true
+#   fig_caption: true
+# md_document:
+#   variant: gfm
+#   preserve_yaml: true
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(httr)
+library(knitr)
+library(rmarkdown)
+library(tinytex)
+knitr::opts_chunk$set(echo = FALSE,
+                      message = F,
+                      warning = F)
+```
+
+\newpage
+\doublespacing
+## Abstract
+
+While economic factors beyond incumbents' control, such as oil prices and international interest rates, often dictate presidential success in Latin America, the case of Mexico presents a puzzle. Research by @CampelloZucco_2016 shows how Low Savings Commodity Exporting (LSCE) Latin American countries tie presidents' fate to external economic swings, but in Mexico, the link appears weaker. This suggests that other factors influence Mexican presidential success, potentially including the impact of the US economy. I propose that Mexico's unique characteristics, shaped by long-term migration and economic ties to the US, make it less sensitive to traditional exogenous shocks but more susceptible to those specific to the conditions of the US economy. I focus on this relationship and the mechanism of misattribution of responsibility, which occurs when citizens mistakenly assign economic outcomes to presidential performance, regardless of its true cause. I contend that citizen perceptions towards positive economic conditions, largely determined by specific fluctuations in the US economy such as remittance flows and strong employment in the construction sector, significantly impact Mexican presidential approval, potentially advancing misattribution. This research aims to better characterize the factors beyond commodity prices and interest rates that influence Mexican presidential success.
+
+## Introduction
+
+Mexico is both part of Latin American countries due to its Spanish heritage and of North America because of its geography. The presence of Mexican culture is widely present in Central and South America however, its economic dynamics differ from that of its Latin American peers. Decades of integration with its two northern Anglo American neighbors, mainly through migration and economic agreements, have come to shape the country characteristics that distinguish Mexico within both regions. 
+
+The issue of misattribution of responsibility occurs when voters attribute economic conditions to incumbents even when those conditions are determined by factors beyond governmental control [@CampelloZucco_CommodityPrices2022]. @camzuvol_2020 claim that exposure to exogenous shocks, strongly associated with dependence on commodities and variations in trade, is a fundamental structural difference between developed and developing economies. They argue that countries highly exposed to volatile exogenous conditions face more challenges in identifying the competence of governments based on the economy.
+
+For a large subset of Latin American countries, presidential popularity and reelection prospects strongly depend on factors exogenous to presidents’ policy choices such as commodity prices and international interest rates. @CampelloZucco_2016 demonstrate that international economic conditions affecting LSCE countries like Brazil, do not impact Mexico in the same way. Brazil stands out as a commodity-exporting nation highly reliant on international capital flows, while Mexico distinguishes itself as one of the least commodity-dependent countries in Latin America. Mexico's unique position is attributed to its close ties with the US consumer market, making it more receptive to financial capital during favorable economic conditions in the United States. This is particularly evident during periods of rising interest rates, indicative of a robust economy. 
+
+This observation is particularly compelling, it signals that other factors beyond international interest rates and commodity prices influence presidential popularity in Mexico. I contend that country characteristics resulting from long-term migration and economic evolution make Mexico less vulnerable to interest rate shocks and commodity prices but also to other factors that result from exogenous shocks rooted in the conditions of the US economy, specifically remittance flows [@germano_2013] and strong employment in the construction sector [@df_canas_2023].
+
+The impact of migration on Mexico has been substantial, driven by diverse needs but ultimately converging on the aspiration for improved living conditions. Historically employed in the US, Mexican migrant workers shifted sectors over the years, with recent concentrations in Construction and Hospitality and Leisure [@df_canas_2023; @bbva_serrano_2022]. As of 2022, Mexico became the world's second-highest receiver of remittances, constituting 4.5% of its GDP, following only India [@bbva_serrano_2022]. In terms of trade, Mexico surpassed Canada as the top US trading partner in 2023 and China becoming the primary manufacturing partner in 2022, driven by post-pandemic nearshoring dynamics and technological advancements in the traditional Mexican “Maquila.” Economic reforms and 13 free trade agreements, particularly under the USMCA, further bolstered Mexico's trade position, attracting substantial foreign direct investment and establishing it as a long-term operational hub [@df_torres_2023; @buendia_1996; @cameronwise_2004].
+
+Despite trade liberalization efforts and enhanced competitiveness, strong labor demand in the US continues to attract migrants, in 2021 a total of 11.9 million Mexican migrants lived in the US [@bbva_serrano_2022]. Endogeneity concerns should be considered since migration could be a consequence of poor long-term policymaking, forcing Mexicans to seek job opportunities elsewhere. However, underlying conditions in the US would determine demand for labor and trade, resulting in exogenous shocks. Beyond the benefits and consequences of trade, remittances, a historically increasing financial flow are sent by migrant workers to support Mexican households [@doyle_2015; @doyleg_2019]. Counterintuitively, remittances are commonly attributed as a presidential accomplishment regardless of the fact that these transfers originate from conditions in the US and migrant workers.
+
+This matters because the positive perception of the increasing flow of remittances might result in misattribution of responsibility for an accomplishment beyond presidential policymaking. Hence, in order to amplify the fitting power of the model introduced by @CampelloZucco_2016 and drawing inspiration from @bravo_2012, @doyles_2018, and @doyleg_2019, I hypothesize that exogenous shocks resulting from i) remittances flows and ii) strong labor demand in the US construction sector, could help better characterize the exogenous shocks conditions and whether or not they have an effect on presidential approval for the case of Mexico.
+
+The remainder of the article is structured as follows: Section (3) introduces notions of assignment of responsibility, economic voting, and presidential success. Alongside, I explain the relationship between remittances, employment in the construction sector, and presidential approval. Section (4) describes the experimental design and data, followed by the hypotheses, and expected results in Section (5). Finally, I portray the implications and limitations of the proposed study in Section (6).
+
+## Literature Review
+
+The relationship between remittances and economic growth has been a topic of debate suggesting that remittances act as a vital international risk-sharing mechanism [@yang_2007], of being largely outside the control of governments in migrant home countries [@germano_2013], to color economic assessments and dampen the political effects of a variety of economic shocks [@bravo_2012], and considered a political manifestation of economic dependency [@wibbels_2006]. @doyle_2015 and @doyles_2018 contribute to the literature by examining the underexplored relationship between fluctuations in remitted income and incumbent. Their study reinforces assumptions about voters' overestimated ability to disentangle competence from exogenous shocks, particularly in low-information, developing country contexts [@camzuvol_2020].
+
+In developing democracies, support for incumbents is often influenced by economic and political developments abroad, such as commodity price shocks [@montfer_2012]. @CampelloZucco_2016 use the Good Economic Times (GET) Index^[The GET Index, devised to gauge the economic environment faced by Latin American countries, combines monthly values of US 10 Year Treasury Constant Maturity Rate and UNCTAD’s "Free Market Commodity Prices" Index. Through principal components decomposition, it condenses these variables into a one-dimensional indicator on a unitless normalized scale. Higher GET values signify favorable economic conditions, while lower values indicate challenging times for the region. The authors justify this simplified approach for its ability to capture variations in international conditions, considering both commodity prices and US interest rates. The index is employed in the study to examine its impact on domestic economic indicators and presidential popularity, particularly distinguishing within 18 Latin American countries, 10 in the LSCE sample and 8 in the comparison group.] based on commodity prices and US interest rates to explain that voters in LSCE countries in Latin America misattribute responsibility for economic outcomes to incumbents. This misattribution, driven by exogenous shocks, has implications for the efficacy of the economic vote as a mechanism of accountability.
+
+@doyle_2015 delves into the relationship between remittances and social spending in developing economies by exploring the impact of remittances on income levels, economic security, and the subsequent implications for social welfare transfers. Findings by @doyle_2015 are in line with @yang_2007, reinforcing the perspective of how remittances increase significantly in response to macroeconomic shocks, acting as a stabilizing force in times of economic uncertainty. @doyle_2015 posits that remittances serve as an insurance and compensation mechanism, contributing to the stability of domestic economies and that such compensation function is further highlighted by the evidence that remittances reduce household income volatility.
+
+Similarly, @doyles_2018 examine the impact of fluctuations in remitted income on support for incumbents in remittance-receiving countries in Central Eastern Europe, the Caucasus, and Central Asia. The authors contend that remittance recipients, by relying on their pocketbooks to assess government performance, may be attributing economic developments abroad to the actions of incumbents at home. They show that changes in remittances influence economic assessments and incumbent approval, with increased remittance inflows leading to higher economic evaluations and incumbent approval, while declines result in punishment for incumbents. 
+
+Findings by @doyle_2015 and @doyles_2018 challenge traditional notions of economic voting [@fiorina_1981; @kramer_1971] and competence misattribution in developed countries [@ds_2008], while reinforcing those of developing countries [@CampelloZucco_CommodityPrices2022]. Economic voting can promote accountability, yet this does not happen as voters reward or punish incumbents for economic outcomes beyond their control, which is also known as misattribution of responsibility. The authors support claims by @camzuvol_2020 stating that economic outcomes and assessments, even if largely driven by exogenous factors, may be the only signal or source of information about incumbent competence that voters have, yet for democratic accountability to work properly, voters should punish or reward incumbents based on outcomes for which they are inherently responsible [@kape_2012].
+
+As @CampelloZucco_2016 show, LSCE countries particularly dependent on oil prices and international interest rates evaluate presidents based on the positive or negative state of the economy, regardless of their direct responsibility. However, the magnitude of exogenous factors varies significantly among countries and regions. When @CampelloZucco_2016 evaluate the predictive power of the GET Index results show a strong covariance between GET and presidential popularity in Brazil (R² = 0.63) but a weak one in Mexico (R² = 0.12). Moreover, when comparing a model with only the GET Index to a model with several domestic economic variables, the GET model performs almost as well in predicting popularity in Brazil but a null effect for Mexico. This finding leads me to believe that country characteristics resulting from long-term migration and economic integration make Mexico vulnerable to exogenous factors of the US economy, specifically remittance flows [@germano_2013] and strong employment in the construction sector [@df_canas_2023].
+
+The human trend of migration has had considerable effects in Mexico. Migration originates from multiple sources of needs, yet they all ultimately converge with the desire for better living conditions. Mexican migrant workers have been historically employed in the US, during the 2000’s they worked mainly in the Commerce (23.6%) and Manufacturing (22.5%) sectors, while more recently they are concentrated in the Construction (19.5%) and Hospitality and Leisure (13.8%) sectors [@df_canas_2023; @bbva_serrano_2022]. As of 2022, Mexico became the second-highest receiver of remittances in the world, only behind India ($55.9 and $98.2 US billions, respectively) but, this amount represents 4.5% of the Mexican GDP while 2.9% in the case of India [@bbva_serrano_2022].
+
+With respect to trade, as of 2023, Mexico became the US top trading partner surpassing Canada, while in 2022 it became its first manufacturing partner surpassing China [@df_torres_2023]. Although this shift accelerated due to post-pandemic nearshoring dynamics in the US, such increased demand is only natural due to technological advances allowing for the expansion and evolution of the traditional Mexican “Maquila” into a multifaceted trade hub. Moreover, this is also a result of sound economic reforms and 13 free trade agreements with 50 countries, particularly those under the scope of the USMCA, which was reformed in 2020 from the originally signed NAFTA in 1991 [@buendia_1996; @cameronwise_2004]. The rule of law conditions that emanated from the trust relationship between Canada, US, and Mexico have enhanced its appeal for larger flows of FDI that tend to establish operations for longer time periods as opposed to shorter term investments that are most prone to capital-flight dynamics [@campello_2015].
+
+Remittances are considered an exogenous and countercyclical capital flow providing a unique opportunity to test misattribution of responsibility, economic voting, and presidential success in Mexico. @germano_2013 and @doyles_2018 position remittances as exogenous capital flows, largely beyond the control of governments in migrant home countries. @df_canas_2023 underscore the critical role of US labor market conditions, particularly in the construction sector, in driving the growth of remittances. They highlight the countercyclical nature of remittances, which increase during economic downturns and emphasize the intricate link between economic conditions in the host country and remittance flows. The direct impact of remittances on household income, coupled with their largely uncontrollable nature by incumbent governments, makes them an excellent identification strategy to examine how individuals attribute responsibility for exogenous economic shocks.
+
+## Discussion
+
+@CampelloZucco_2016 explore presidential success and popularity with the GET Index that display robust significant effects on presidential reelection probabilities in LSCE countries, particularly during favorable international economic conditions. Despite this, authors acknowledge the challenges in predicting presidential elections, emphasizing that most empirical work on economic voting is better at predicting popularity than actual voting behavior. @doyles_2018 underscore the fragile equilibrium remittances can create, influencing accountability mechanisms and governance dynamics in remittance-dependent economies. Misattribution, whether rational or not, poses normative challenges for democratic accountability, urging a reconsideration of traditional economic voting models in the context of exogenous shocks and remittance dependency.
+
+![ Debt Service Share and Commodity Dependence](com_debt_latam.png){ width=100% height=100% #fig:label .center}
+
+The classification of countries into the LSCE category, consider most South American countries and Nicaragua, which contrasts sharply with the stance of Central American countries, Mexico and Paraguay, which generally exhibit lower dependence on commodity exports. To quantify this dependence, in Figure 1 below, I use data from the World Bank (WB) and World Trade Organization (WTO) to compute the Debt Service as Share of Exports and Dependence on Commodities, as outlined @CampelloZucco_2016. The distinction in commodity dependence becomes crucial when considering the economic vulnerabilities of countries in the region. Nations heavily reliant on commodity exports often find themselves as price takers in international trade markets, exposing them to the cyclicality of prices and leading to significant fluctuations in export earnings. During periods of high commodity prices, these countries experience economic prosperity and increased export revenues. Conversely, as prices decline, they face economic hardships. 
+
+### Remittances in Central and Latin America
+
+@franzoni_2008 points out that countries with limited capacity to establish large social programs experience higher migration and greater remittance inflows, I compare latest and historical remittances as share of GDP in the same Latin American Countries and the top 10 remittance-receiving countries in Figure 2 and 3 below. In the context of small Central American states, where remittance inflows are substantial, social security and welfare spending tend to be low and favor the upper-income quintiles . For example, @ahmed_2016 describes the dual impact of remittances in the Dominican Republic—eroding clientelist linkages while, simultaneously, increasing support for the incumbent due to positive economic perceptions among recipients. 
+
+![Remittance as % of GDP 2022](rem22_lat_top.png){ width=100% height=100% #fig:label .center}
+
+![Remittance as % of GDP: Historical](remhist_lat_top.png){ width=100% height=100% #fig:label .center}
+
+@doyle_2015 uses the CEPALSTAT^[Comisión Económica para América Latina y el Caribe (CEPAL)] database from 2014 to highlight that since the 1990s, countries like Argentina, Brazil, and Mexico have witnessed increased social transfers, while others like Bolivia, El Salvador, and Peru experienced contractions or stagnation despite a global commodity boom and left-leaning executives in power. The author suggests that while remittances aren't the sole explanation, they contribute to the unexplained heterogeneity of welfare regimes across the region, particularly in countries with high levels of inequality and economic insecurity [@doyle_2015]. The change in remittances as a share of GDP in the same Latin American countries for 1, 5, and 10 years can be seen in Figure 4, while that of the top remittance-receiving countries is depicted in Figure 5."
+
+![Remittance % Change Latam](remlat_chg.png){ width=100% height=100% #fig:label .center}
+
+![Remittance % Change Top Receving](remtop_chg.png){ width=100% height=100% #fig:label .center}
+
+@apames_2012 demonstrate in Mexico that elected officials strategically use remittances for political purposes, emphasizing the potential misattribution of remittances. @doyle_2015 further elucidates this argument by suggesting that this misattribution, particularly in developing democracies, alters individual preferences towards redistribution and taxation, potentially resulting in reduced social welfare transfers being diverted towards patronage.
+
+@ahmed_2016 argues that remittances act as unearned foreign income for governments in autocracies, leading to reduced welfare spending. @doyle_2015 extends this argument to democratic states, suggesting that remittances, even in democracies, result in reduced social welfare transfers, emphasizing the bottom-up causal mechanism where remittances alter individual preferences towards redistribution and taxation.
+
+### Insecurity and Crime
+
+It is tempting to study presidential approval with variables like perceptions of security and crime, scholars like @romeromag_2016 and @doyleg_2019 have argued that these predictors have a weight in presidential success in Mexico, even more so than economic performance. However, the foundations of these variables are more endogenously-related given the state’s responsibility for order and governance. While one could make a case that insecurity could arise from increased competition between Drug Trafficking Organizations (DTOs) on a feud to protect or increase their share of the narcotics demand in the US market, it could be more challenging to say that crime	 would be exogenously-driven by factors in the US. It is precisely the exogenous and countercyclical characteristics of remittances that allows for the exploration of misattribution of responsibility.
+
+@romeromag_2016 and @doyleg_2019 focus on the influence of remittances on public security perceptions, personal safety, and presidential approval. Contrary to the economic vote hypothesis, they propose that remittances in Mexico impact approval through enhanced security perceptions, given the nation's high crime rates. Specifically, @romeromag_2016 show that remittance recipients report higher perceived safety and better national security evaluations. @doyleg_2019 reinforce such findings using individual data from Mexico spanning six waves of the LAPOP public opinion survey 2006–2017. Moreover, they employ causal mediation analysis, revealing that nearly a quarter of the effect of remittances on sociotropic security evaluations is mediated through improved perceptions of personal safety.
+
+Comparing these studies, both converge on the significance of security in shaping presidential approval. However, they differ in their emphasis, @romeromag_2016 underscore the importance of symbolic actions and a strong presidential stance on security, while @doyleg_2019 highlight the role of remittances in shaping security perceptions. The studies diverge in their approach to economic considerations, @romeromag_2016 suggest citizens prioritize security over economic concerns during security crises. In contrast, @doyleg_2019 argue that remittances, by alleviating economic pressures associated with crime, contribute to improved security evaluations and, consequently, presidential approval.
+
+### Oil-dependence Paradox
+
+Mexico stands out as one of the world's largest crude oil exporters, boasting extensive reserves that rank 12th globally, enriched with abundant heavy crude deposits. Pemex, the state-owned oil company, has played a pivotal role in driving the country's oil export market, shipping millions of barrels daily, predominantly to the United States [@bbva_roda_2023]. These crude oil exports significantly contribute to Mexico's economic development, generating substantial revenue for the government. However, a contradiction emerges as Mexico, despite being an oil-producing nation, finds itself heavily reliant on the United States for refined petroleum products, particularly gasoline.
+
+The paradox is elucidated by Mexico's insufficient domestic refining capacity, which lags behind its crude oil production. The country's refineries often grapple with outdated infrastructure, requiring substantial upgrades to efficiently process heavy crude into gasoline and other refined products. Consequently, Mexico turns to importing gasoline, with the United States emerging as a major supplier. The decision to import gasoline is not merely driven by necessity but also by cost considerations and expediency. Importing gasoline, particularly from the US, proves to be a more economical and swift solution than investing in extensive domestic refining upgrades. 
+
+Compared to the dependence of oil exporters in South America, asseverations by @CampelloZucco_2016 appear logical, yet on closer inspection Mexico's position in the global oil market appears a two-fold dependence, exporting crude while concurrently relying on foreign sources for refined products. The latest Pemex third quarter report for 2023 reveals that Mexico imported 1.84 billion barrels of refined products, primarily gasoline and diesel, while domestic refining produced only 649 million barrels [@bbva_roda_2023]. This stark contrast highlights that over 70% of Mexico's gasoline consumption is met through imports, emphasizing the nation's significant dependence on external suppliers. Because of this, I contend that the original GET Index can be enhanced by including remittances flows, hopefully achieving a better characterization of the index for the Mexican case.
+
+## Research Design and Data
+
+For the dependent variable, presidential approval, I will follow @doyleg_2019, using individual data from Mexico obtained from the LAPOP public opinion survey. This will enable me to explore the relationship between the receipt of remittances and approval for the president. As for the predictors, first, I will replicate the original GET Index by @CampelloZucco_2016, which combines monthly values of the US 10 Year Treasury Constant Maturity Rate and UNCTAD’s 'Free Market Commodity Prices' Index. 
+
+-	Second, I will create a database with:
+    + Historic remittance flows of Mexico. Additionally, I will explore the values of Latin American countries and the Top 10 remittance-receiving countries. 
+    + Monthly construction employment from the Bureau of Labor Statistics payroll survey and median hourly nominal construction sector 12-month wage growth from the Federal Reserve Bank of Atlanta’s wage growth tracker. (See Annex)
+    + Alternatively, I will use either the FHFA (Federal Housing Finance Agency) House Price Index measures month over month changes in average prices of single-family houses with mortgages guaranteed by Fannie Mae and Freddie Mac. (See Annex)
+    + Or the DJUSRE index is designed to track the performance of real estate investment trusts (REIT) and other companies that invest directly or indirectly in real estate through development, management, or ownership, including property agencies. (See Annex)
+
+-	Finally, I will attempt to create an updated version of the GET Index that accounts for exogenous factors that attain the Mexican economy. By using the baseline model with commodities and interest rates, I will test the changes in popularity as I introduce remittance flows, construction statistics, and the real peso exchange index. Hopefully it can better characterize the variations in the economy that are relevant for presidential success, popularity, and eventually election prospects. 
+
+## Hypotheses and Expected Results
+
+-	Hypotheses:
+    + H1: Increases in remittance flows from the US positively influence presidential approval ratings in Mexico.
+    + H2: Strong employment in the US construction sector positively influences presidential approval ratings in Mexico.
+    + H3: Remittance flows and employment in the US construction sector will have a stronger correlation with presidential approval in Mexico compared to the influence of commodity prices and international interest rates.
+
+-	Expected Results:
+    + E1: We expect to find a positive correlation between remittance flows and presidential approval ratings in Mexico. This means that as remittance flows increase, we would expect to see an increase in the percentage of citizens who approve of the president's performance.
+    + E2: We expect to find a positive correlation between strong employment in the US construction sector and presidential approval ratings in Mexico. This means that when US construction is booming and demand for Mexican labor is high, we would expect to see an increase in presidential approval.
+    + E3: Economic factors such as commodity prices and international interest rates have a weaker correlation with presidential approval in Mexico compared to the influence of remittance flows and employment in the US construction sector.
+
+## Implications and Limitations
+
+Implications
+This research holds several implications that contribute to a nuanced understanding of exogenous the factors influencing presidential success and misattribution of responsibility in Mexico. First and foremost, the identification of positive correlations between increased remittance flows and higher levels of presidential approval, as well as the influence of strong employment in the US construction sector, underscores the significance of US-related factors in shaping Mexican public opinion. By acknowledging the impact of remittances and the US labor market on citizens' perceptions, the study can contribute to the literature on misattribution of responsibility highlighting the intricacies of public opinion formation in Mexico. 
+
+Citizens' tendency to attribute economic outcomes to the incumbent, even when driven by external factors, underscores the need for a nuanced approach to understanding voter behavior. This insight may pave the way for further research into the psychological dimensions of political decision-making, offering a deeper understanding of how citizens interpret and assign credit or blame for economic conditions. Ultimately, the implications of this research extend beyond the Mexican context, providing valuable insights for scholars and policymakers dealing with similar dynamics in other countries of Central and South America with close economic ties to the US.
+
+Despite its contributions, this study faces several limitations that warrant consideration. Firstly, the retrospective nature of the data analysis poses challenges in establishing causal relationships. While efforts will be made to control for confounding variables, the inherent complexities of economic and political systems may limit the ability to definitively establish causation. This limitation emphasizes the need for cautious interpretation of the results and invites future research to delve deeper into the temporal dynamics of the relationship between economic factors and presidential approval.
+
+Secondly, the generalizability of the findings is constrained by the specific socio-economic and geopolitical context of Mexico. The historical, cultural, and economic ties between Mexico and the United States may not be directly applicable to other countries, cautioning against broad extrapolation of the results. 
+
+Finally, the study's focus on specific exogenous shocks related to the US economy might limit its scope in capturing the entirety of factors influencing presidential approval. While remittance flows and employment in the US construction sector are explored in depth, other potential factors like security, crime, and corruption that contribute to public perceptions and evaluations may not be fully addressed. 
+
+
+
+\singlespacing
+## References
+
+<div id="refs"></div>
+
+\newpage
+
+## Annex
+
+![Monthly Construction Employment](const_emp.png){ width=40% height=40% #fig:label .center}
+
+![Median Hourly Nominal Construction Wage](const_wage.png){ width=40% height=40% #fig:label .center}
+
+![ FHFA (Federal Housing Finance Agency) House Price Index](fhfa_9123.png){ width=40% height=40% #fig:label .center}
+
+![Dow Jones US Real Estate Index](djusrei_1423.png){ width=40% height=40% #fig:label .center}
+
+https://www.atlantafed.org/chcs/wage-growth-tracker
+
+https://www.bls.gov/ces/
+
+https://tradingeconomics.com/united-states/housing-index
+
+https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-real-estate-index/#overview
+
+https://www.fhfa.gov/AboutUs/Reports/ReportDocuments/FHFA-HPI-Monthly_12262023.pdf
+
+https://www.fhfa.gov/Dashboards/UAD/Pages/uad_advanced_analytics.aspx
+
+https://catalog.data.gov/dataset?q=fhfa
+
+https://catalog.data.gov/dataset/fhfa-house-price-indexes-hpis-948c6
+
+https://stats.wto.org/
+
+![LSCE](lsce.png){ width=100% height=100% #fig:label .center  }
